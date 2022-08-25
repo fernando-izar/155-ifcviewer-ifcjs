@@ -17,6 +17,7 @@
   "description": "",
   "dependencies": {
     "three": "^0.135.0",
+    "three-mesh-bvh": "^0.5.15",
     "web-ifc-viewer": "^1.0.209"
   }
 }
