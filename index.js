@@ -1,5 +1,6 @@
 import { Color } from "three";
 import { IfcViewerAPI } from "web-ifc-viewer";
+import { IFCLoader } from "web-ifc-three/IFCLoader";
 
 const container = document.getElementById("viewer-container");
 const viewer = new IfcViewerAPI({
@@ -9,10 +10,18 @@ const viewer = new IfcViewerAPI({
 viewer.grid.setGrid();
 viewer.axes.setAxes();
 
-async function loadIfc(url) {
-  await viewer.IFC.setWasmPath("../../../");
-  const model = await viewer.IFC.loadIfcUrl(url);
-  viewer.shadowDropper.renderShadow(model.modelID);
-}
+const input = document.getElementById("file-input");
+const ifcLoader = new IFCLoader();
 
-loadIfc("./assets/building.ifc");
+input.addEventListener("change", async (changed) => {
+  const ifcURL = URL.createObjectURL(changed.target.files[0]);
+  // const model = await ifcLoader.loadAsync(ifcURL);
+
+  async function loadIfc(url) {
+    await viewer.IFC.setWasmPath("../../../");
+    const model = await viewer.IFC.loadIfcUrl(url);
+    viewer.shadowDropper.renderShadow(model.modelID);
+  }
+
+  loadIfc(ifcURL);
+});

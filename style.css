@@ -11,6 +11,10 @@
   --normal-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   --blur-filter: blur(8px);
 }
+input {
+  z-index: 1;
+}
+
 div {
   height: 100vh;
 }
