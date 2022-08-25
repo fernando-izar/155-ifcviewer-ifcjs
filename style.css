@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+
+  --light-gray: rgb(123, 123, 123);
+  --light-blue: #8dbafff0;
+  --translucent-white: rgba(255, 255, 255, 0.7);
+
+  --normal-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  --blur-filter: blur(8px);
+}
+div {
+  height: 100vh;
+}
