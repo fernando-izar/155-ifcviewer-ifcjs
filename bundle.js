@@ -95557,14 +95557,20 @@ function cast(event) {
   return raycaster.intersectObjects(ifcModels);
 }
 
-function pick(event) {
+async function pick(event) {
   const found = cast(event)[0];
+
   if (found) {
     const index = found.faceIndex;
     const geometry = found.object.geometry;
     const ifc = ifcLoader.ifcManager;
     const id = ifc.getExpressId(geometry, index);
-    console.log(id);
+    const modelID = found.object.modelID;
+    const props = await ifc.getItemProperties(modelID, id, true); //recursive
+    // const props = await ifc.getItemProperties(modelID, id); //no recursive
+
+    console.log("id", id);
+    console.log("properties", props);
   }
 }
 
