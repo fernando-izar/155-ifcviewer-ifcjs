@@ -26,5 +26,16 @@ input.addEventListener("change", async (changed) => {
   loadIfc(ifcURL);
 });
 
-window.ondblclick = async () => await viewer.IFC.selector.pickIfcItem();
+// window.ondblclick = async () => await viewer.IFC.selector.pickIfcItem();
+
+window.ondblclick = async () => {
+  // const result = await viewer.IFC.selector.highlightIfcItem();
+  const result = await viewer.IFC.selector.pickIfcItem();
+
+  if (!result) return;
+  const { modelID, id } = result;
+  const props = await viewer.IFC.getProperties(modelID, id, true, false);
+  console.log(props);
+};
+
 window.onmousemove = async () => await viewer.IFC.selector.prePickIfcItem();
