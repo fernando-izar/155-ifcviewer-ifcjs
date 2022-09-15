@@ -121925,14 +121925,57 @@ input.addEventListener("change", async (changed) => {
 
 // window.ondblclick = async () => await viewer.IFC.selector.pickIfcItem();
 
+window.onmousemove = async () => await viewer.IFC.selector.prePickIfcItem();
+
 window.ondblclick = async () => {
   // const result = await viewer.IFC.selector.highlightIfcItem();
   const result = await viewer.IFC.selector.pickIfcItem();
+  // console.log("result", result);
 
   if (!result) return;
   const { modelID, id } = result;
   const props = await viewer.IFC.getProperties(modelID, id, true, false);
-  console.log(props);
+  console.log("props", props);
+  createPropertiesMenu(props);
 };
 
-window.onmousemove = async () => await viewer.IFC.selector.prePickIfcItem();
+const propsGUI = document.getElementById("ifc-property-menu-root");
+
+function createPropertiesMenu(properties) {
+  console.log("properties", properties);
+
+  removeAllChildren(propsGUI);
+
+  delete properties.psets;
+  delete properties.mats;
+  delete properties.type;
+
+  for (let key in properties) {
+    createPropertyEntry(key, properties[key]);
+  }
+}
+
+function createPropertyEntry(key, value) {
+  const propContainer = document.createElement("div");
+  propContainer.classList.add("ifc-property-item");
+
+  if (value === null || value === undefined) value = "undefined";
+  else if (value.value) value = value.value;
+
+  const keyElement = document.createElement("div");
+  keyElement.textContent = key;
+  propContainer.appendChild(keyElement);
+
+  const valueElement = document.createElement("div");
+  valueElement.classList.add("ifc-property-value");
+  valueElement.textContent = value;
+  propContainer.appendChild(valueElement);
+
+  propsGUI.appendChild(propContainer);
+}
+
+function removeAllChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
