@@ -100,6 +100,7 @@ input.addEventListener(
     const model = await ifcLoader.loadAsync(ifcURL);
     scene.add(model);
     ifcModels.push(model);
+    console.log("ifcModels", ifcModels);
   },
   false
 );
@@ -134,7 +135,7 @@ function pick(event) {
     const geometry = found.object.geometry;
     const ifc = ifcLoader.ifcManager;
     const id = ifc.getExpressId(geometry, index);
-    console.log(id);
+    console.log("id", id);
   }
 }
 
