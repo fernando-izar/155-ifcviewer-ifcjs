@@ -16,7 +16,7 @@ input {
 }
 
 div {
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 /*Tree view: https://www.w3schools.com/howto/howto_js_treeview.asp*/
@@ -73,4 +73,14 @@ ul,
 .active {
   display: block;
   margin-left: 10px;
+}
+
+.viewer-container {
+  position: relative;
+  height: 100vh;
+}
+
+.checkboxes {
+  position: absolute;
+  right: 5px;
 }
