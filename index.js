@@ -21,6 +21,13 @@ viewer.axes.setAxes();
 
 const input = document.getElementById("file-input");
 const ifcLoader = new IFCLoader();
+ifcLoader.ifcManager.useWebWorkers(true, "./IFCWorker.js");
+
+// async function setUpMultiThreading() {
+//   const manager = ifcLoader.ifcManager;
+//   await manager.useWebWorkers(true, "./IFCWorker.js");
+// }
+// setUpMultiThreading();
 
 input.addEventListener("change", async (changed) => {
   const ifcURL = URL.createObjectURL(changed.target.files[0]);
@@ -35,12 +42,24 @@ input.addEventListener("change", async (changed) => {
     await setupAllCategories();
 
     const ifcProject = await viewer.IFC.getSpatialStructure(model.modelID);
-    console.log(ifcProject);
+    // console.log(ifcProject);
     createTreeMenu(ifcProject);
   }
 
   loadIfc(ifcURL);
 });
+
+setupProgressNotification();
+
+function setupProgressNotification() {
+  const text = document.querySelector(".progress-text");
+  console.log("text", text);
+  ifcLoader.ifcManager.setOnProgress((event) => {
+    const percent = (event.loaded / event.total) * 100;
+    const result = Math.trunc(percent);
+    text.innerText = result.toString();
+  });
+}
 
 // window.ondblclick = async () => await viewer.IFC.selector.pickIfcItem();
 
@@ -51,7 +70,7 @@ window.ondblclick = async () => {
   if (!result) return;
   const { modelID, id } = result;
   const props = await viewer.IFC.getProperties(modelID, id, true, false);
-  console.log(props);
+  // console.log(props);
 };
 
 window.onmousemove = async () => await viewer.IFC.selector.prePickIfcItem();
@@ -140,7 +159,7 @@ function removeAllChildren(element) {
 }
 
 const scene = viewer.context.getScene();
-console.log("scene", scene);
+// console.log("scene", scene);
 
 // List of categories names
 const categories = {
