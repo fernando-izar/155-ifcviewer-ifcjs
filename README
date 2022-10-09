@@ -1,0 +1,30 @@
+# IFC VIEWER
+
+This project is a IFC visualizer designed with Threejs and IFCjs.
+
+The features of this project are:
+
+-visualize ifc model - OK
+
+-select the elements - OK
+
+-show properties - WIP
+
+-create spatioal tree - OK
+
+-multithread to load the files - WIP
+
+-edit ifc model - WIP
+
+-see floorplans -WIP
+
+-make annotations -WIP
+
+-make report from IFC model - WIP
+
+-GIS integration - WIP
+
+# how to use it
+
+fork this repository and clone it to your local repository.
+type "npm run build" and open with live server in browser
